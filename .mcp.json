@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "agent-tracker": {
+      "type": "http",
+      "url": "http://localhost:5050/mcp"
+    }
+  }
+}
