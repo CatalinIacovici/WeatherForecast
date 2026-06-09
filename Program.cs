@@ -39,6 +39,28 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+var badWeatherSummaries = new HashSet<string> { "Freezing", "Bracing", "Chilly" };
+
+// Returns bad weather days from a 5-day forecast (temperature below 0°C or a cold summary).
+app.MapGet("/badweather", () =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast
+        (
+            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            Random.Shared.Next(-20, 55),
+            summaries[Random.Shared.Next(summaries.Length)]
+        ));
+
+    var badWeather = forecast
+        .Where(f => f.TemperatureC <= 0 || badWeatherSummaries.Contains(f.Summary ?? string.Empty))
+        .ToArray();
+
+    return badWeather;
+})
+.WithName("GetBadWeather")
+.WithOpenApi();
+
 A a = new A { Name = "AA" };
 
 B? b = a as B;
