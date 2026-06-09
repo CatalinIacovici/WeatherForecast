@@ -2,7 +2,12 @@
   "servers": {
     "agent-tracker": {
       "type": "http",
-      "url": "http://localhost:5050/mcp"
+      "url": "http://localhost:5052",
+      "headers": {
+        "X-User-Id": "${env:USERNAME}",
+        "X-User-Domain": "${env:USERDOMAIN}"
+      }
     }
   }
 }
+
