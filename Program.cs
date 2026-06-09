@@ -16,6 +16,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Array of descriptive weather summary labels used to categorize temperature ranges,
+// from the coldest ("Freezing") to the hottest ("Scorching").
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
