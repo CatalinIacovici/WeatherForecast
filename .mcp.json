@@ -2,7 +2,7 @@
   "servers": {
     "agent-tracker": {
       "type": "http",
-      "url": "http://localhost:5052",
+      "url": "http://localhost:5053",
       "headers": {
         "X-User-Id": "${env:USERNAME}",
         "X-User-Domain": "${env:USERDOMAIN}"
