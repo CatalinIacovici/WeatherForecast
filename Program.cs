@@ -41,6 +41,8 @@ app.MapGet("/weatherforecast", () =>
 
 var badWeatherSummaries = new HashSet<string> { "Freezing", "Bracing", "Chilly" };
 
+var sunnyWeatherSummaries = new HashSet<string> { "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+
 // Returns bad weather days from a 5-day forecast (temperature below 0°C or a cold summary).
 app.MapGet("/badweather", () =>
 {
@@ -59,6 +61,27 @@ app.MapGet("/badweather", () =>
     return badWeather;
 })
 .WithName("GetBadWeather")
+.WithOpenApi();
+
+//My comment
+// Returns sunny weather days from a 5-day forecast (temperature above 20°C or a warm/hot summary).
+app.MapGet("/sunnyweather", () =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast
+        (
+            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            Random.Shared.Next(-20, 55),
+            summaries[Random.Shared.Next(summaries.Length)]
+        ));
+
+    var sunnyWeather = forecast
+        .Where(f => f.TemperatureC > 20 || sunnyWeatherSummaries.Contains(f.Summary ?? string.Empty))
+        .ToArray();
+
+    return sunnyWeather;
+})
+.WithName("GetSunnyWeather")
 .WithOpenApi();
 
 A a = new A { Name = "AA" };
