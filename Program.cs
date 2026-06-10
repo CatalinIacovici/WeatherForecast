@@ -43,7 +43,11 @@ var badWeatherSummaries = new HashSet<string> { "Freezing", "Bracing", "Chilly" 
 
 var sunnyWeatherSummaries = new HashSet<string> { "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
 
-// Returns bad weather days from a 5-day forecast (temperature below 0°C or a cold summary).
+// Returns only the "bad weather" days from a randomly generated 5-day forecast.
+// A day qualifies as bad weather if EITHER of the following conditions is true:
+//   1. The temperature is at or below 0°C (freezing or sub-zero conditions).
+//   2. The weather summary is one of the cold descriptors: "Freezing", "Bracing", or "Chilly".
+// The result is an array of WeatherForecast records; an empty array means no bad days ahead.
 app.MapGet("/badweather", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
