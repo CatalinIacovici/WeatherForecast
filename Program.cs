@@ -67,7 +67,29 @@ B? b = a as B;
 
 Console.WriteLine(b as A);
 
+// Returns a 5-day weather forecast for Timisoara with city-specific temperature ranges (-5°C to 38°C).
+app.MapGet("/weatherforecast/timisoara", () =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new TimisoaraWeatherForecast
+        (
+            City: "Timisoara",
+            Date: DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC: Random.Shared.Next(-5, 38),
+            Summary: summaries[Random.Shared.Next(summaries.Length)]
+        ))
+        .ToArray();
+    return forecast;
+})
+.WithName("GetTimisoaraWeatherForecast")
+.WithOpenApi();
+
 app.Run();
+
+internal record TimisoaraWeatherForecast(string City, DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
